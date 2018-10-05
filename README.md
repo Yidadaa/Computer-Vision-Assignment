@@ -2,7 +2,7 @@
 > 2018 Fall
 
 Assignment 1: Camera calibration.    
-Assignment 2: Coming soon.
+Assignment 2: Coming soon.    
 ...
 
 ### Note
