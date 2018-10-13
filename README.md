@@ -3,6 +3,7 @@
 
 Assignment 1: Camera calibration.    
 Assignment 2: Disparity map from stereo images.
+
 ...
 
 ### Note
