@@ -1,0 +1,83 @@
+\documentclass[]{article}
+    \input{../../template/structure.tex}
+    \usepackage{fontspec}
+    \usepackage{indentfirst}
+    \usepackage{booktabs}
+    \setmainfont{思源宋体 CN}
+    \XeTeXlinebreaklocale "zh"
+    \XeTeXlinebreakskip = 0pt plus 1pt
+
+    \title{Computer Vision 2018 Fall Assignment \\ \textbf{\#2 Disparity Map of Stereo Images}}
+    \author{张义飞 --- 201821080630\\ \texttt{yidadaa@qq.com}}
+    \date{\small{UESTC --- \today}}
+    
+    \begin{document}
+
+    \maketitle
+
+    \section{双目立体视觉}
+    双目立体视觉的开创性工作始于上世纪的60年代中期。美国MIT的Roberts通过从数字图像中提取立方体、楔形体和棱柱体等简单规则多面体的三维结构，并对物体的形状和空间关系进行描述，把过去的简单二维图像分析推广到了复杂的三维场景，标志着立体视觉技术的诞生。随着研究的深入，研究的范围从边缘、角点等特征的提取，线条、平面、曲面等几何要素的分析，直到对图像明暗、纹理、运动和成像几何等进行分析，并建立起各种数据结构和推理规则。特别是上世纪80年代初，Marr首次将图像处理、心理物理学、神经生理学和临床精神病学的研究成果从信息处理的角度进行概括，创立了视觉计算理论框架。这一基本理论对立体视觉技术的发展产生了极大的推动作用，在这一领域已形成了从图像的获取到最终的三维场景可视表面重构的完整体系，使得立体视觉已成为计算机视觉中一个非常重要的分支。
+
+    双目立体视觉（Binocular Stereo Vision）是机器视觉的一种重要形式，它是基于视差原理并利用成像设备从不同的位置获取被测物体的两幅图像，通过计算图像对应点间的位置偏差，来获取物体三维几何信息的方法。
+
+    双目立体视觉融合两只眼睛获得的图像并观察它们之间的差别，使我们可以获得明显的深度感，建立特征间的对应关系，将同一空间物理点在不同图像中的映像点对应起来，这个差别，我们称作视差(Disparity)图像。
+    \begin{question}
+        明确本次实验的内容。
+        \begin{enumerate}
+            \item \textbf{目的：}根据双目摄像机获取的两幅图像，计算它们的视差图像（Disparity Image）；
+            \item \textbf{输入：}双目摄像机获取的两幅图像；
+            \item \textbf{输出：}视差图。
+        \end{enumerate}
+    \end{question}
+
+    \section{实验过程}
+    本节中，我们首先调用Opencv自带的SGBM算法计算原始双目图像的视差图，然后调研SGBM算法的几个参数对最终效果的影响。
+    \subsection{计算视差图}
+        原始图像和计算出的视差图分别如图\ref{lfig}，\ref{rfig}，\ref{disfig}所示。
+        \begin{figure}[htbp]
+            \centering
+            \begin{minipage}[t]{0.3\textwidth}
+                \centering
+                \includegraphics[width=4cm]{../code/dataset/l.png}
+                \caption{左目图像}
+                \label{lfig}
+            \end{minipage}
+            \begin{minipage}[t]{0.3\textwidth}
+                \centering
+                \includegraphics[width=4cm]{../code/dataset/r.png}
+                \caption{右目图像}
+                \label{rfig}
+            \end{minipage}
+            \begin{minipage}[t]{0.3\textwidth}
+                \centering
+                \includegraphics[width=4cm]{../code/result/example_gray.jpg}
+                \caption{视差图}
+                \label{disfig}
+            \end{minipage}
+        \end{figure}
+
+    \subsection{将灰度图转化为伪彩色图像}
+    为了使生成的图像便于观察，使用opencv的applyMapColor函数将灰度图转化为彩色图像。
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{minipage}[t]{0.4\textwidth}
+            \centering
+            \includegraphics[width=5cm]{../code/result/example_gray.jpg}
+            \label{lfig}
+        \end{minipage}
+        \begin{minipage}[t]{0.4\textwidth}
+            \centering
+            \includegraphics[width=5cm]{../code/result/example_fakergb.jpg}
+            \label{rfig}
+        \end{minipage}
+        \caption{将灰度图映射为伪彩色图像}
+    \end{figure}
+
+    
+    \subsection{观察SGBM算法的不同参数对结果的影响}
+
+    \section{附录}
+        \input{./code.tex}
+
+    \end{document}
