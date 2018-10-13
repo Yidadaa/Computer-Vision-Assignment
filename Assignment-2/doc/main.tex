@@ -3,6 +3,9 @@
     \usepackage{fontspec}
     \usepackage{indentfirst}
     \usepackage{booktabs}
+    \usepackage{graphicx}
+    \usepackage{subfigure}
+    \usepackage{url}
     \setmainfont{思源宋体 CN}
     \XeTeXlinebreaklocale "zh"
     \XeTeXlinebreakskip = 0pt plus 1pt
@@ -64,20 +67,35 @@
         \begin{minipage}[t]{0.4\textwidth}
             \centering
             \includegraphics[width=5cm]{../code/result/example_gray.jpg}
-            \label{lfig}
         \end{minipage}
         \begin{minipage}[t]{0.4\textwidth}
             \centering
             \includegraphics[width=5cm]{../code/result/example_fakergb.jpg}
-            \label{rfig}
         \end{minipage}
         \caption{将灰度图映射为伪彩色图像}
     \end{figure}
 
-    
-    \subsection{观察SGBM算法的不同参数对结果的影响}
 
+    \subsection{观察SGBM算法的不同参数对结果的影响}
+    SGBM重要参数如下所示：
+    \begin{enumerate}
+        \item \textbf{MinDisparity}，即最小视差，本实验中将其设置为0，因为两个摄像头是前向平行放置，相同的物体在左图中一定比在右图中偏右。如果为了追求更大的双目重合区域而将两个摄像头向内偏转的话，这个参数是需要考虑的。 
+
+        \item \textbf{UniquenessRatio}，主要可以防止误匹配，此参数对于最后的匹配结果是有很大的影响。立体匹配中，宁愿区域无法匹配，也不要误匹配。如果有误匹配的话，碰到障碍检测这种应用，就会很麻烦。该参数不能为负值，一般5-15左右的值比较合适，int型。
+
+        \item \textbf{BlockSize}，SAD窗口大小，容许范围是[5,255]，一般应该在 5x5..21x21 之间，参数必须为奇数值, int型。 
+
+        \item \textbf{NumDisparities}，视差窗口，即最大视差值与最小视差值之差,窗口大小必须是 16的整数倍，int型。
+    \end{enumerate}
+
+    在SGBM算法的参数中，对视差生成效果影响较大的主要参数是BlockSize、NumDisparities和UniquenessRatio三个，一般只需对这三个参数进行调整，其余参数按默认设置即可。本节将着重观察BlockSize和NumDisparities两个参数对结果的影响。图\ref{bigfig}展示了不同的参数对最终生成的视差图的影响。
+
+    可以看到，较大的BlockSize可以使得生成的视差图更加平滑，而较大的NumDisparities会使画面左侧出现黑色边框，所以使用较小的NumDisparities和较大的BlockSize可以获得比较好的视差图效果。
+    \input{./image.tex}
+
+    \newpage
     \section{附录}
-        \input{./code.tex}
+    本实验代码已在Github开源，请访问：\url{https://github.com/Yidadaa/Computer-Vision-Assignment/tree/master/Assignment-2}。
+    \input{./code.tex}
 
     \end{document}
